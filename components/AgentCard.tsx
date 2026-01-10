@@ -217,7 +217,7 @@ const AgentCard: React.FC<AgentCardProps> = ({ config, content, isLoading, isPen
         </div>
         {!isConfigMode && (
           <div className="ml-auto flex flex-col items-end gap-0.5">
-             {isGeminiAgent ? (
+             {config.modelProvider === ModelProvider.GEMINI ? (
                  <span className="text-[9px] uppercase font-mono px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300">联网搜索</span>
              ) : (
                  <span className="text-[9px] uppercase font-mono px-1.5 py-0.5 rounded bg-white/10 opacity-70">逻辑推演</span>
@@ -257,17 +257,17 @@ const AgentCard: React.FC<AgentCardProps> = ({ config, content, isLoading, isPen
            {/* 模型选择 */}
            <div>
              <div className="text-[10px] uppercase text-slate-400 mb-1 ml-0.5">模型 (Model)</div>
-             {isGeminiAgent ? (
-                 <div className="w-full bg-slate-900/50 text-xs text-slate-400 border border-white/5 rounded px-2 py-1.5 cursor-not-allowed italic flex items-center justify-between">
-                    <span>Gemini 2.5 Flash</span>
-                    <span className="text-[9px] bg-blue-500/20 text-blue-300 px-1 rounded">AUTO</span>
-                 </div>
-             ) : isDeepSeekAgent ? (
-                 <div className="w-full bg-slate-900/50 text-xs text-slate-400 border border-white/5 rounded px-2 py-1.5 cursor-not-allowed italic flex items-center justify-between">
-                    <span>DeepSeek Chat</span>
-                    <span className="text-[9px] bg-purple-500/20 text-purple-300 px-1 rounded">AUTO</span>
-                 </div>
-             ) : null}
+             <select
+               value={config.modelName}
+               onChange={handleModelChange}
+               className="w-full bg-slate-900/50 text-xs text-slate-300 border border-white/5 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+             >
+               {MODEL_OPTIONS.map(option => (
+                 <option key={option.name} value={option.name}>
+                   {option.label}
+                 </option>
+               ))}
+             </select>
            </div>
         </div>
       )}
