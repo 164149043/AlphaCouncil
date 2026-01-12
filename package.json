@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
+    "@vercel/analytics": "^1.4.0",
     "lucide-react": "^0.554.0",
     "node-fetch": "^3.3.2",
     "react": "^19.2.0",
