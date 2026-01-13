@@ -217,7 +217,7 @@ const AgentCard: React.FC<AgentCardProps> = ({ config, content, isLoading, isPen
         </div>
         {!isConfigMode && (
           <div className="ml-auto flex flex-col items-end gap-0.5">
-             {config.modelProvider === ModelProvider.GEMINI ? (
+             {config.modelProvider === 'gemini' ? (
                  <span className="text-[9px] uppercase font-mono px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300">联网搜索</span>
              ) : (
                  <span className="text-[9px] uppercase font-mono px-1.5 py-0.5 rounded bg-white/10 opacity-70">逻辑推演</span>
