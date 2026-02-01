@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+// import { GoogleGenAI } from '@google/genai'; // 可以删除这行，不再使用
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -20,33 +20,46 @@ export default async function handler(req, res) {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
 
-  const { model, prompt, temperature, tools, apiKey } = req.body;
+  const { model, prompt, temperature, apiKey } = req.body;
 
-  // 优先使用 Vercel 环境变量，前端传递的 API Key 作为备用
+  // 优先使用 Vercel 环境变量
   const effectiveApiKey = GEMINI_API_KEY || apiKey;
 
   if (!effectiveApiKey) {
     return res.status(500).json({
       success: false,
-      error: '未配置 Gemini API Key。请在 Vercel 项目设置中配置 GEMINI_API_KEY 环境变量，或在前端临时输入 API Key'
+      error: '未配置 Gemini API Key'
     });
   }
 
   try {
-    const ai = new GoogleGenAI({ apiKey: effectiveApiKey });
-    
-    const response = await ai.models.generateContent({
-      model: model || 'gemini-2.5-flash',
-      contents: prompt,
-      config: {
-        temperature: temperature || 0.7,
-        tools: tools || [{ googleSearch: {} }]
-      }
+    // 改用 fetch 访问 API 易的 OpenAI 兼容接口
+    const response = await fetch('https://api.apiyi.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${effectiveApiKey}`
+      },
+      body: JSON.stringify({
+        model: model || 'gemini-2.5-flash', // 保持模型名一致
+        messages: [
+          { role: 'user', content: prompt }
+        ],
+        temperature: temperature || 0.7
+        // 注意：OpenAI 格式的 tools 参数与 Gemini 不同，这里暂时移除 googleSearch 工具
+      })
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error?.message || `HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    
     return res.json({
       success: true,
-      text: response.text || ''
+      text: data.choices[0].message.content || ''
     });
   } catch (error) {
     console.error('[Gemini] 请求失败:', error.message);
