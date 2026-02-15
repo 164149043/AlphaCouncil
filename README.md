@@ -153,32 +153,7 @@
 *   AI 模型可能会产生“幻觉”或基于过时信息进行推理。
 *   请务必结合个人独立判断进行投资操作。
 
----
 
-## 🔑 API 密钥获取指南
-
-### 1. Google Gemini API Key
-- **获取地址**: [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
-- **用途**: 用于宏观、行业、资金流向分析（支持联网搜索）
-- **费用**: 有免费额度
-
-### 2. DeepSeek API Key
-- **获取地址**: [https://platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys)
-- **用途**: 用于技术分析、基本面估值、总监整合、风控评估、总经理决策
-- **费用**: 按使用量付费，价格低廉
-
-### 3. 聚合数据 API Key
-- **获取地址**: [https://www.juhe.cn/](https://www.juhe.cn/)
-- **用途**: 获取沪深股市实时行情数据（五档盘口、成交量等）
-- **申请接口**: 需要在聚合数据平台申请"沪深股票-基本数据"接口
-- **费用**: 有免费额度
-
-### 4. 通义千问 API Key（可选）
-- **获取地址**: [https://dashscope.console.aliyun.com/apiKey](https://dashscope.console.aliyun.com/apiKey)
-- **用途**: 备用 AI 模型（当前版本未强制使用）
-- **费用**: 有免费额度
-
----
 
 ## 💡 前端手动输入 API 密钥（可选）
 
